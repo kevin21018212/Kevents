@@ -18,12 +18,13 @@ export type NewUser = InferInsertModel<typeof Users>;
 // Types for Events table
 export const Events = pgTable("Events", {
   event_id: serial("event_id").primaryKey(),
-  event_time: text("event_time"),
+  event_name: serial("event_name"),
   description: text("description"),
-  url: text("url"),
+  week: integer("week"),
   imagepath: text("imagepath"),
   location: text("location"),
-  week: text("week"),
+  url: text("url"),
+  event_time: text("event_time"),
 });
 
 export type Event = InferSelectModel<typeof Events>;
@@ -34,7 +35,7 @@ export const Movies = pgTable("Movies", {
   movie_id: serial("movie_id").primaryKey(),
   movie_title: text("movie_title").notNull(),
   url: text("url"),
-  week: text("week"),
+  week: integer("week"),
 });
 
 export type Movie = InferSelectModel<typeof Movies>;

@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./page.module.css";
 import UsersComponent from "./management/user";
 import CreateMovie from "./management/movie";
+import CreateEvent from "./management/event";
 
 const Home = () => {
   return (
@@ -10,7 +11,7 @@ const Home = () => {
       <div>
         <p className={styles.userMessage}>Hello, </p>
         <UsersComponent />
-        <CreateMovie />
+        <CreateEvent />
       </div>
     </div>
   );
