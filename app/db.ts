@@ -20,7 +20,7 @@ export const Events = pgTable("Events", {
   event_id: serial("event_id").primaryKey(),
   event_name: text("event_name"),
   description: text("description"),
-  week: integer("week"),
+  week: integer("week").notNull(),
   imagepath: text("imagepath"),
   location: text("location"),
   url: text("url"),
@@ -35,7 +35,7 @@ export const Movies = pgTable("Movies", {
   movie_id: serial("movie_id").primaryKey(),
   movie_title: text("movie_title").notNull(),
   url: text("url"),
-  week: integer("week"),
+  week: integer("week").notNull(),
 });
 
 export type Movie = InferSelectModel<typeof Movies>;

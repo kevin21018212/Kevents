@@ -1,18 +1,34 @@
+"use client";
 import React from "react";
-import styles from "./page.module.css";
-import UsersComponent from "./management/user";
-import CreateMovie from "./management/movie";
-import CreateEvent from "./management/event";
+import { signIn, signOut, useSession } from "next-auth/react";
 
 const Home = () => {
+  const { data: session } = useSession() as { data: any };
+
+  const handleSignClick = async () => {
+    if (session && session.user) {
+      await signOut();
+    } else {
+      await signIn("google", { callbackUrl: "/" });
+    }
+  };
+
   return (
-    <div className={styles.container}>
-      <h1 className={styles.title}>Welcome to the Home Page</h1>
-      <div>
-        <p className={styles.userMessage}>Hello, </p>
-        <UsersComponent />
-        <CreateEvent />
-      </div>
+    <div>
+      <h1>Welcome to the Home Page</h1>
+      {!session ? (
+        <div>
+          <p>Please log in to access additional features.</p>
+        </div>
+      ) : (
+        <div>
+          <p>Hello, {session.user.name}!</p>
+          {/* Add other content for logged-in users */}
+        </div>
+      )}
+      <button onClick={handleSignClick}>
+        {session && session.user ? "Sign Out" : "Sign In"}
+      </button>
     </div>
   );
 };
