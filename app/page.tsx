@@ -12,7 +12,6 @@ const Home = () => {
       <div>
         <p className={styles.userMessage}>Hello, </p>
         <UsersComponent />
-        <CreateMovie />
       </div>
     </div>
   );
