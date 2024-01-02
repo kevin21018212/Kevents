@@ -1,0 +1,27 @@
+/* CreateMovieForm.module.css */
+.formContainer {
+  margin: 20px;
+}
+
+.formSection {
+  margin-bottom: 20px;
+}
+
+.label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.inputField {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+}
+
+.submitButton {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+}
