@@ -15,6 +15,6 @@ export async function GET(request: Request) {
     week,
   });
 
-  const movies = await sql`SELECT * FROM Movies`;
+  const movies = await db.select().from(Movies);
   return NextResponse.json({ movies }, { status: 200 });
 }

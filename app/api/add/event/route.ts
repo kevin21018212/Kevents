@@ -25,6 +25,6 @@ export async function GET(request: Request) {
     return NextResponse.json({ error }, { status: 500 });
   }
 
-  const events = await sql`SELECT * FROM Events`;
+  const events = await await db.select().from(Events);
   return NextResponse.json({ events }, { status: 200 });
 }

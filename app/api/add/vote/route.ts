@@ -23,6 +23,6 @@ export async function GET(request: Request) {
     return NextResponse.json({ error }, { status: 500 });
   }
 
-  const votes = await sql`SELECT * FROM Votes`;
+  const votes = await db.select().from(Votes);
   return NextResponse.json({ votes }, { status: 200 });
 }
