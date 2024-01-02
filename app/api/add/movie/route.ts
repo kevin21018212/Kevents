@@ -9,10 +9,13 @@ export async function GET(request: Request) {
     const movie_title = searchParams.get("title") as string;
     const week = parseInt(searchParams.get("week") as string);
 
+    // Read API key from environment variables
+    const omdbApiKey = process.env.MOVIE_KEY;
+
     // Make API call to OMDB to get the movie details
     const omdbApiUrl = `https://www.omdbapi.com/?t=${encodeURIComponent(
       movie_title
-    )}&apikey=9b611428`;
+    )}&apikey=${omdbApiKey}`;
     const omdbApiResponse = await fetch(omdbApiUrl);
     const omdbData = await omdbApiResponse.json();
 
