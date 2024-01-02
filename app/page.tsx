@@ -2,9 +2,11 @@
 import React from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import styles from "./page.module.css";
-import { Events } from "./db";
+
 import WeekView from "./components/weekview";
 import Vote from "./components/vote";
+import UsersComponent from "./management/user";
+import CreateMovie from "./management/movie";
 const Home = () => {
   const { data: session } = useSession() as { data: any };
 
@@ -36,7 +38,7 @@ const Home = () => {
           </button>
         </div>
       </div>
-      <WeekView />
+      <CreateMovie />
       {!session ? <></> : <Vote />}
     </>
   );

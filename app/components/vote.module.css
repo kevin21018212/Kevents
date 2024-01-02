@@ -5,7 +5,6 @@
   display: flex;
   width: 100vw;
 }
-
 .eventBox {
   flex-grow: 2;
 }

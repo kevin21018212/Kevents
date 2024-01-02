@@ -1,23 +1,29 @@
 // Serverless function (GET)
 import { Movies, db } from "@/app/db";
+import { eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
     const movie_title = searchParams.get("title") as string;
-    const url = searchParams.get("url") as string;
     const week = parseInt(searchParams.get("week") as string);
-    const existingMovies = await db
-      .select({ movie_title: Movies.movie_title })
-      .from(Movies);
 
-    const movieExists = existingMovies.some(
-      (movie) => movie.movie_title === movie_title
-    );
+    // Make API call to OMDB to get the movie details
+    const omdbApiUrl = `https://www.omdbapi.com/?t=${encodeURIComponent(
+      movie_title
+    )}&apikey=9b611428`;
+    const omdbApiResponse = await fetch(omdbApiUrl);
+    const omdbData = await omdbApiResponse.json();
 
-    if (movieExists) {
-      // If the movie doesn't exist, add it to the Movies table
+    const url = omdbData.Poster || "";
+
+    const movieExists = await db
+      .select()
+      .from(Movies)
+      .where(eq(Movies.movie_title, movie_title));
+
+    if (movieExists.length === 0) {
       await db.insert(Movies).values({
         movie_title,
         url,

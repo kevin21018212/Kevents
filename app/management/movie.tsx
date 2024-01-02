@@ -1,10 +1,9 @@
-"use effect";
+"use client";
 import { useState } from "react";
 
 const CreateMovie = () => {
   const [formData, setFormData] = useState({
     movie_title: "",
-    url: "",
     week: "",
   });
 
@@ -20,7 +19,6 @@ const CreateMovie = () => {
     try {
       const queryParams = new URLSearchParams({
         title: formData.movie_title,
-        url: formData.url,
         week: formData.week,
       });
 
@@ -55,16 +53,7 @@ const CreateMovie = () => {
             />
           </label>
           <br />
-          <label>
-            URL:
-            <input
-              type="text"
-              name="url"
-              value={formData.url}
-              onChange={handleChange}
-            />
-          </label>
-          <br />
+          {/* URL input removed from the form */}
           <label>
             Week:
             <input
