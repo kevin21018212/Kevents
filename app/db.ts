@@ -18,7 +18,7 @@ export type NewUser = InferInsertModel<typeof Users>;
 // Types for Events table
 export const Events = pgTable("Events", {
   event_id: serial("event_id").primaryKey(),
-  event_name: serial("event_name"),
+  event_name: text("event_name"),
   description: text("description"),
   week: integer("week"),
   imagepath: text("imagepath"),
