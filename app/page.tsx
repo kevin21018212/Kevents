@@ -38,7 +38,7 @@ const Home = () => {
           </button>
         </div>
       </div>
-      <CreateMovie />
+      <WeekView />
       {!session ? <></> : <Vote />}
     </>
   );

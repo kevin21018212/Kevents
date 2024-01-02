@@ -1,8 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import styles from "./weekview.module.css";
-
-// Import types from the db file
 import { Movie, Event } from "@/app/db";
 
 const WeekView: React.FC = () => {
@@ -40,9 +38,14 @@ const WeekView: React.FC = () => {
         </div>
         <div className={styles.movieBox}>
           {weekData.movies.map((movie) => (
-            <div key={movie.movie_id}>
-              <p>{movie.movie_title}</p>
-            </div>
+            <div
+              key={movie.movie_id}
+              className={styles.movie}
+              style={{
+                background: `url(${movie.url})`,
+                backgroundSize: "cover",
+              }}
+            ></div>
           ))}
         </div>
       </div>

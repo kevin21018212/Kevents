@@ -1,0 +1,18 @@
+.container {
+  width: 100vw;
+}
+
+.usersContainer {
+  flex-grow: 1;
+  height: 30vh;
+  width: 100vw;
+  overflow-y: auto;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.moviesAndEventsContainer {
+  flex-grow: 1;
+  display: flex;
+  height: auto;
+}

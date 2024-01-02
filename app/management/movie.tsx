@@ -1,5 +1,6 @@
 "use client";
-import { useState } from "react";
+import React, { useState } from "react";
+import styles from "./movie.module.css"; // Import the CSS module
 
 const CreateMovie = () => {
   const [formData, setFormData] = useState({
@@ -31,43 +32,41 @@ const CreateMovie = () => {
   };
 
   return (
-    <div>
-      <div>
-        <div>
-          <h3>Add Movie</h3>
-          <p>Add a new movie with the details below</p>
-        </div>
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            addMovie();
-          }}
-        >
-          <label>
-            Movie Title:
-            <input
-              type="text"
-              name="movie_title"
-              value={formData.movie_title}
-              onChange={handleChange}
-            />
-          </label>
-          <br />
-          {/* URL input removed from the form */}
-          <label>
-            Week:
-            <input
-              type="text"
-              name="week"
-              value={formData.week}
-              onChange={handleChange}
-              required
-            />
-          </label>
-          <br />
-          <button type="submit">Add Movie</button>
-        </form>
+    <div className={styles.container}>
+      <div className={styles.header}>
+        <h3>Add Movie</h3>
+        <p>Add a new movie with the details below</p>
       </div>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          addMovie();
+        }}
+      >
+        <label>
+          Movie Title:
+          <input
+            type="text"
+            name="movie_title"
+            value={formData.movie_title}
+            onChange={handleChange}
+          />
+        </label>
+        <br />
+        {/* URL input removed from the form */}
+        <label>
+          Week:
+          <input
+            type="text"
+            name="week"
+            value={formData.week}
+            onChange={handleChange}
+            required
+          />
+        </label>
+        <br />
+        <button type="submit">Add Movie</button>
+      </form>
     </div>
   );
 };

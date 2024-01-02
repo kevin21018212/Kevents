@@ -1,0 +1,62 @@
+.container {
+  background-color: #f5f5f5;
+  padding: 20px;
+  margin: 20px;
+
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  margin: auto;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.info {
+  text-align: left;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.subtitle {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.divider {
+  border-top: 1px solid #000;
+  margin: 10px 0;
+}
+
+.userList {
+  display: flex;
+  flex-direction: column;
+}
+
+.userItem {
+  padding: 10px;
+  border-bottom: 1px solid #000;
+}
+
+.userInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.username {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.userDetails {
+  font-size: 0.8rem;
+  color: #555;
+}
