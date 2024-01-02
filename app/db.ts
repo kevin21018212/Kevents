@@ -1,5 +1,4 @@
 import { pgTable, serial, text, integer } from "drizzle-orm/pg-core";
-
 import { sql } from "@vercel/postgres";
 import { drizzle } from "drizzle-orm/vercel-postgres";
 import { InferInsertModel, InferSelectModel } from "drizzle-orm";
@@ -33,7 +32,7 @@ export type NewEvent = InferInsertModel<typeof Events>;
 // Types for Movies table
 export const Movies = pgTable("Movies", {
   movie_id: serial("movie_id").primaryKey(),
-  movie_title: text("movie_title"),
+  movie_title: text("movie_title").notNull(),
   url: text("url"),
   week: text("week"),
 });

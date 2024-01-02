@@ -1,66 +1,101 @@
 "use client";
-import React, { useState } from "react";
-import { db, Movies } from "../db"; // Adjust the path
+import { useState } from "react";
 
 const CreateMovie = () => {
-  const [movieData, setMovieData] = useState({
+  const [formData, setFormData] = useState({
     movie_title: "",
     url: "",
     week: "",
   });
 
-  const handleInputChange = (e: any) => {
+  const handleChange = (e: { target: { name: any; value: any } }) => {
     const { name, value } = e.target;
-    setMovieData({
-      ...movieData,
+    setFormData((prevData) => ({
+      ...prevData,
       [name]: value,
-    });
+    }));
   };
 
-  ("use server");
-  const handleCreateMovie = async () => {
+  const addMovie = async () => {
     try {
-      // Validate input fields as needed
-      if (!movieData.movie_title) {
-        console.error("Movie title is required");
-        return;
-      }
-
-      // Insert the new movie into the database
-      await db.insert(Movies).values(movieData);
-
-      // Optionally, you can redirect or perform other actions after creating the movie
-      console.log("Movie created successfully!");
-
-      // Clear the form fields after creating the movie
-      setMovieData({
-        movie_title: "",
-        url: "",
-        week: "",
+      const queryParams = new URLSearchParams({
+        title: formData.movie_title,
+        url: formData.url,
+        week: formData.week,
       });
+
+      const response = await fetch(`api/add/movie?${queryParams.toString()}`, {
+        method: "GET",
+      });
+
+      if (response.ok) {
+        // Movie added successfully, handle accordingly (e.g., show success message, redirect)
+        console.log("Movie added successfully");
+      } else {
+        // Handle errors (e.g., show error message)
+        console.error(response);
+      }
     } catch (error) {
-      console.error("Error creating movie:", error);
+      console.error("Error adding movie:", error);
     }
   };
 
   return (
-    <div>
-      <h2>Create Movie</h2>
-      <form>
-        <label>
-          Movie Title:
-          <input
-            type="text"
-            name="movie_title"
-            value={movieData.movie_title}
-            onChange={handleInputChange}
-          />
-        </label>
-        {/* Add input fields for other properties like url, week, etc. */}
-        <button type="button" onClick={handleCreateMovie}>
-          Create Movie
-        </button>
-      </form>
+    <div className="flex h-screen w-screen items-center justify-center bg-gray-50">
+      <div className="z-10 w-full max-w-md overflow-hidden rounded-2xl border border-gray-100 shadow-xl">
+        <div className="flex flex-col items-center justify-center space-y-3 border-b border-gray-200 bg-white px-4 py-6 pt-8 text-center sm:px-16">
+          <h3 className="text-xl font-semibold">Add Movie</h3>
+          <p className="text-sm text-gray-500">
+            Add a new movie with the details below
+          </p>
+        </div>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            addMovie();
+          }}
+        >
+          <label>
+            Movie Title:
+            <input
+              type="text"
+              name="movie_title"
+              value={formData.movie_title}
+              onChange={handleChange}
+              required
+            />
+          </label>
+          <br />
+          <label>
+            URL:
+            <input
+              type="text"
+              name="url"
+              value={formData.url}
+              onChange={handleChange}
+              required
+            />
+          </label>
+          <br />
+          <label>
+            Week:
+            <input
+              type="text"
+              name="week"
+              value={formData.week}
+              onChange={handleChange}
+              required
+            />
+          </label>
+          <br />
+          <button
+            type="submit"
+            className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700"
+          >
+            Add Movie
+          </button>
+        </form>
+      </div>
     </div>
   );
 };

@@ -1,7 +1,5 @@
 import React from "react";
-
 import styles from "./page.module.css";
-
 import UsersComponent from "./management/user";
 import CreateMovie from "./management/movie";
 
@@ -12,6 +10,7 @@ const Home = () => {
       <div>
         <p className={styles.userMessage}>Hello, </p>
         <UsersComponent />
+        <CreateMovie />
       </div>
     </div>
   );
