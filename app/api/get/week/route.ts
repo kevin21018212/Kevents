@@ -22,6 +22,7 @@ export async function GET(request: Request) {
       current.votes > max.votes ? current : max
     );
 
+
     const displayedmovie = maxVotesObject.movie_id as number;
 
     const movies = await db
