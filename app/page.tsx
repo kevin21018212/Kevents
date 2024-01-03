@@ -24,7 +24,7 @@ const Home = () => {
         <Box className={styles.textBox}>
           {!session ? (
             <Typography variant="body1">
-              Please log in to access additional features.
+              Please log in to access additional features. Free Young thug
             </Typography>
           ) : (
             <Typography variant="body1">Hello, {session.user.name}!</Typography>
