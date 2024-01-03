@@ -1,7 +1,5 @@
 import { MovieVotes, Users, db } from "@/app/db";
 import { and, eq } from "drizzle-orm";
-
-import { getSession } from "next-auth/react";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
