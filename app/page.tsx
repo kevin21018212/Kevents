@@ -4,8 +4,6 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import styles from "./page.module.css";
 import WeekView from "./components/weekview";
 import Vote from "./components/vote";
-import { Users, db } from "./db";
-import { eq } from "drizzle-orm";
 
 const Home = () => {
   const { data: session } = useSession() as { data: any };

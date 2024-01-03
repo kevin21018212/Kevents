@@ -11,12 +11,12 @@
   margin-bottom: 20px;
 }
 
-label {
+.label {
   display: block;
   margin-bottom: 10px;
 }
 
-input {
+.input {
   width: 100%;
   padding: 8px;
   margin-top: 4px;
@@ -24,7 +24,7 @@ input {
   box-sizing: border-box;
 }
 
-button {
+.button {
   background-color: #4caf50;
   color: white;
   padding: 10px 15px;
@@ -33,6 +33,6 @@ button {
   cursor: pointer;
 }
 
-button:hover {
+.button:hover {
   background-color: #45a049;
 }
