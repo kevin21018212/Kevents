@@ -28,7 +28,7 @@ const Vote = ({ week, session }: VoteProps) => {
   useEffect(() => {
     async function getData() {
       const useremail = session?.user?.email as string;
-      const responseWeek = await fetch(`/api/get/week?week=${week}`);
+      const responseWeek = await fetch(`/api/get/eventvote?week=${week}`);
       const dataWeek = await responseWeek.json();
       setWeekData(dataWeek);
       const responseCanVote = await fetch(

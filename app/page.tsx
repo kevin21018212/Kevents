@@ -20,7 +20,7 @@ const Home = () => {
 
   return (
     <div className={styles.container}>
-      <Box className={styles.box}>
+      <div className={styles.heading}>
         <Box className={styles.textBox}>
           {!session ? (
             <Typography variant="body1">
@@ -29,16 +29,16 @@ const Home = () => {
           ) : (
             <Typography variant="body1">Hello, {session.user.name}!</Typography>
           )}
+          <Button
+            className={styles.button}
+            onClick={handleSignClick}
+            variant="contained"
+            color="primary"
+          >
+            {session && session.user ? "Sign Out" : "Sign In"}
+          </Button>
         </Box>
-        <Button
-          className={styles.button}
-          onClick={handleSignClick}
-          variant="contained"
-          color="primary"
-        >
-          {session && session.user ? "Sign Out" : "Sign In"}
-        </Button>
-      </Box>
+      </div>
       <WeekView />
       {!session ? <></> : <Vote week={2} session={session} />}
     </div>
