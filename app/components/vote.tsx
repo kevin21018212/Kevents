@@ -56,7 +56,7 @@ const Vote = ({ week, session }: VoteProps) => {
   };
 
   return (
-    <Container className={styles.container}>
+    <div className={styles.container}>
       <Typography variant="h4">Vote</Typography>
       <Box className={styles.content}>
         <Box className={styles.eventBox}>
@@ -100,7 +100,7 @@ const Vote = ({ week, session }: VoteProps) => {
           ))}
         </Box>
       </Box>
-    </Container>
+    </div>
   );
 };
 

@@ -1,5 +1,5 @@
 .container {
-  height: 60vh;
+  height: 50vh;
 }
 
 .content {
@@ -14,13 +14,12 @@
 .movieBox {
   display: flex;
   flex-wrap: wrap;
-  height: 60vh;
-  width: 40vw;
+  height: 50vh;
+  width: 20vw;
   overflow: hidden;
 }
 
 .movie {
-  height: 50%;
-  width: 40%;
-  margin: 0.5em;
+  height: 100%;
+  width: 100%;
 }
