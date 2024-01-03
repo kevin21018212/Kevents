@@ -1,14 +1,20 @@
 .container {
   height: 50vh;
 }
+
 .content {
   display: flex;
   width: 100vw;
 }
+
 .eventBox {
   flex-grow: 2;
+  padding: 1em;
 }
 
 .movieBox {
   flex-grow: 1;
+  padding: 1em;
 }
+
+/* Add styles for TextField and Button if needed */

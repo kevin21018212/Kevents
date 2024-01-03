@@ -1,12 +1,19 @@
 "use client";
-
+import { ThemeProvider } from "@mui/material";
 import { SessionProvider } from "next-auth/react";
-import { ReactNode } from "react";
+import React, { ReactNode } from "react";
+import { theme } from "./theme";
 
-export default function NextAuthProvider({
-  children,
-}: {
+interface Props {
   children: ReactNode;
-}) {
-  return <SessionProvider>{children}</SessionProvider>;
 }
+
+const Providers = (props: Props) => {
+  return (
+    <SessionProvider>
+      <ThemeProvider theme={theme}>{props.children}</ThemeProvider>
+    </SessionProvider>
+  );
+};
+
+export default Providers;

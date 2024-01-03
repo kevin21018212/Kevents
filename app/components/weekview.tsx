@@ -1,5 +1,8 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import Container from "@mui/material/Container";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
 import styles from "./weekview.module.css";
 import { Movie, Event } from "@/app/db";
 
@@ -25,30 +28,34 @@ const WeekView: React.FC = () => {
 
   return (
     <div className={styles.container}>
-      <h1>Week View</h1>
-      <div className={styles.content}>
-        <div className={styles.eventBox}>
+      <Typography variant="h4">Week View</Typography>
+      <Box className={styles.content}>
+        <Box className={styles.eventBox}>
           {/* Display event information */}
           {weekData.events.map((event) => (
-            <div key={event.event_id}>
-              <p>Event Name: {event.event_name || "No Name"}</p>
-              <p>Description: {event.description || "No Description"}</p>
-            </div>
+            <Box key={event.event_id}>
+              <Typography variant="body1">
+                Event Name: {event.event_name || "No Name"}
+              </Typography>
+              <Typography variant="body1">
+                Description: {event.description || "No Description"}
+              </Typography>
+            </Box>
           ))}
-        </div>
-        <div className={styles.movieBox}>
+        </Box>
+        <Box className={styles.movieBox}>
           {weekData.movies.map((movie) => (
-            <div
+            <Box
               key={movie.movie_id}
               className={styles.movie}
               style={{
-                background: `url(${movie.url})`,
+                backgroundImage: `url(${movie.url})`,
                 backgroundSize: "cover",
               }}
-            ></div>
+            ></Box>
           ))}
-        </div>
-      </div>
+        </Box>
+      </Box>
     </div>
   );
 };

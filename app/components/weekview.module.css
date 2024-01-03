@@ -15,13 +15,12 @@
   display: flex;
   flex-wrap: wrap;
   height: 60vh;
-  width: 30vw;
+  width: 40vw;
   overflow: hidden;
 }
 
 .movie {
-  background-position: center;
-  background-repeat: no-repeat;
   height: 50%;
-  width: 50%;
+  width: 40%;
+  margin: 0.5em;
 }

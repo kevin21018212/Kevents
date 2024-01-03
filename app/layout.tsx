@@ -20,6 +20,7 @@ export default function RootLayout({
       <body className={`inter.className`}>
         <NextAuthProvider>
           <SpeedInsights />
+
           {children}
         </NextAuthProvider>
       </body>

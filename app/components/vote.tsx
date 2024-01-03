@@ -1,33 +1,53 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import Container from "@mui/material/Container";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
 import styles from "./vote.module.css";
-
-// Import types from the db file
 import { Movie, Event } from "@/app/db";
 
-const Vote: React.FC = () => {
-  const [weekData, setWeekData] = useState<{
-    events: Event[];
-    movies: Movie[];
-  }>({ events: [], movies: [] });
+interface VoteProps {
+  week: number;
+  session: any;
+}
+interface WeekData {
+  events: Event[];
+  movies: Movie[];
+}
+
+const Vote = ({ week, session }: VoteProps) => {
+  const [weekData, setWeekData] = useState<WeekData>({
+    events: [],
+    movies: [],
+  });
+
+  const [userCanVote, setUserCanVote] = useState<boolean | null>(null);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(`/api/get/week?week=2`);
-        const data = await response.json();
-        setWeekData(data);
-      } catch (error) {
-        console.error("Error fetching week data:", error);
-      }
-    };
+    async function getData() {
+      const useremail = session?.user?.email as string;
+      const responseWeek = await fetch(`/api/get/week?week=${week}`);
+      const dataWeek = await responseWeek.json();
+      setWeekData(dataWeek);
+      const responseCanVote = await fetch(
+        `/api/get/canvote?week=${week}&email=${useremail}`
+      );
+      const dataCanVote = await responseCanVote.json();
+      setUserCanVote(dataCanVote.userCanVote);
+    }
+    getData();
+  }, [week, session]);
 
-    fetchData();
-  }, []);
+  const handleVote = async (movieId: number) => {
+    const useremail = session?.user?.email as string;
+    await fetch(
+      `/api/add/votemovie?week=${week}&email=${useremail}&movie_id=${movieId}`
+    );
 
-  const handleVote = (movieId: number) => {
-    // Implement your logic to handle the vote for the selected movie
-    console.log(`Voting for movie with ID ${movieId}`);
+    setUserCanVote(false);
+    console.log(`Voted successfully for movie with ID ${movieId}`);
   };
 
   const handlePreferredTime = (eventId: number, time: string) => {
@@ -36,38 +56,51 @@ const Vote: React.FC = () => {
   };
 
   return (
-    <div className={styles.container}>
-      <h1>Vote</h1>
-      <div className={styles.content}>
-        <div className={styles.eventBox}>
+    <Container className={styles.container}>
+      <Typography variant="h4">Vote</Typography>
+      <Box className={styles.content}>
+        <Box className={styles.eventBox}>
           {/* Display event information */}
           {weekData.events.map((event) => (
-            <div key={event.event_id}>
-              <p>Event Name: {event.event_name || "No Name"}</p>
-              <p>Description: {event.description || "No Description"}</p>
+            <Box key={event.event_id}>
+              <Typography variant="body1">
+                Event Name: {event.event_name || "No Name"}
+              </Typography>
+              <Typography variant="body1">
+                Description: {event.description || "No Description"}
+              </Typography>
               {/* Preferred Time Input */}
-              <input
-                type="text"
+              <TextField
+                variant="outlined"
+                fullWidth
                 placeholder="Preferred Time"
                 onChange={(e) =>
                   handlePreferredTime(event.event_id, e.target.value)
                 }
               />
-            </div>
+            </Box>
           ))}
-        </div>
-        <div className={styles.movieBox}>
-          {/* Display movie information with Vote Button */}
+        </Box>
+        <Box className={styles.movieBox}>
+          {/* Display movie information with Vote Button (conditionally) */}
           {weekData.movies.map((movie) => (
-            <div key={movie.movie_id}>
-              <p>{movie.movie_title}</p>
-              {/* Vote Button */}
-              <button onClick={() => handleVote(movie.movie_id)}>Vote</button>
-            </div>
+            <Box key={movie.movie_id}>
+              <Typography variant="body1">{movie.movie_title}</Typography>
+              {/* Conditionally render the Vote Button based on user voting eligibility */}
+              {userCanVote !== null && userCanVote && (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => handleVote(movie.movie_id)}
+                >
+                  Vote
+                </Button>
+              )}
+            </Box>
           ))}
-        </div>
-      </div>
-    </div>
+        </Box>
+      </Box>
+    </Container>
   );
 };
 

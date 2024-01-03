@@ -41,14 +41,25 @@ export const Movies = pgTable("Movies", {
 export type Movie = InferSelectModel<typeof Movies>;
 export type NewMovie = InferInsertModel<typeof Movies>;
 
-// Types for Votes table
-export const Votes = pgTable("Votes", {
-  vote_id: serial("vote_id").primaryKey(),
+// Types for EventVotes table
+export const EventVotes = pgTable("EventVotes", {
+  event_vote_id: serial("event_vote_id").primaryKey(),
   user_id: integer("user_id").references(() => Users.user_id),
   event_id: integer("event_id").references(() => Events.event_id),
-  movie_id: integer("movie_id").references(() => Movies.movie_id),
   preferred_event_time: text("preferred_event_time"),
+  week: integer("week").notNull(),
 });
 
-export type Vote = InferSelectModel<typeof Votes>;
-export type NewVote = InferInsertModel<typeof Votes>;
+export type EventVote = InferSelectModel<typeof EventVotes>;
+export type NewEventVote = InferInsertModel<typeof EventVotes>;
+
+// Types for MovieVotes table
+export const MovieVotes = pgTable("MovieVotes", {
+  movie_vote_id: serial("movie_vote_id").primaryKey(),
+  user_id: integer("user_id").references(() => Users.user_id),
+  movie_id: integer("movie_id").references(() => Movies.movie_id),
+  week: integer("week").notNull(),
+});
+
+export type MovieVote = InferSelectModel<typeof MovieVotes>;
+export type NewMovieVote = InferInsertModel<typeof MovieVotes>;
