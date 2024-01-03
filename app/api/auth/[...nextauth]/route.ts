@@ -7,37 +7,33 @@ const handler = NextAuth({
   secret: process.env.AUTH_SECRET,
   providers: [
     GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID ?? "",
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? "",
+      clientId: process.env.GOOGLE_CLIENT_ID as string,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+      authorization: {
+        params: {
+          prompt: "consent",
+          access_type: "offline",
+          response_type: "code",
+        },
+      },
     }),
   ],
-
   callbacks: {
-    async signIn(params) {
-      const { profile } = params;
-
-      try {
-        // Check if the user already exists in the Users table
-        if (profile && profile.email) {
-          const existingUser = await db
-            .select()
-            .from(Users)
-            .where(eq(Users.google_account_id, profile.email));
-
-          if (existingUser.length === 0) {
-            // If the user doesn't exist, add them to the Users table
-            await db.insert(Users).values({
-              username: profile.name,
-              google_account_id: profile.email,
-            });
-          }
+    async jwt({ profile, account, token }) {
+      if (token && token.email) {
+        const existingUser = await db
+          .select()
+          .from(Users)
+          .where(eq(Users.google_account_id, token.email));
+        if (existingUser.length === 0) {
+          await db.insert(Users).values({
+            username: token.name,
+            google_account_id: token.email,
+          });
         }
-
-        return true;
-      } catch (error) {
-        console.error("Error during signIn callback:", error);
-        return false; // Handle the error as needed
       }
+
+      return token;
     },
   },
 });

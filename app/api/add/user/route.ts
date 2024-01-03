@@ -6,7 +6,8 @@ import { NextResponse } from "next/server";
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
-    const email = searchParams.get("google_account_id") as string;
+    const username = searchParams.get("username") as string;
+    const email = searchParams.get("email") as string;
 
     const existingUser = await db
       .select()
@@ -16,7 +17,7 @@ export async function GET(request: Request) {
     if (existingUser.length === 0) {
       // If the user doesn't exist, add them to the Users table
       await db.insert(Users).values({
-        username: searchParams.get("username") as string,
+        username: username,
         google_account_id: email,
       });
 
@@ -33,5 +34,13 @@ export async function GET(request: Request) {
       { error: "Internal Server Error" },
       { status: 500 }
     );
+  }
+   callbacks: {
+    async signIn({ account, profile }) {
+      if (account.provider === "google") {
+        return profile.email_verified && profile.email.endsWith("@example.com")
+      }
+      return true // Do different verification for other providers that don't have `email_verified`
+    },
   }
 }

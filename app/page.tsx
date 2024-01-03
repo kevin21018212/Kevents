@@ -2,19 +2,19 @@
 import React from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import styles from "./page.module.css";
-
 import WeekView from "./components/weekview";
 import Vote from "./components/vote";
-import UsersComponent from "./management/user";
-import CreateMovie from "./management/movie";
+import { Users, db } from "./db";
+import { eq } from "drizzle-orm";
+
 const Home = () => {
   const { data: session } = useSession() as { data: any };
 
   const handleSignClick = async () => {
     if (session && session.user) {
-      await signOut();
+      await signOut({ redirect: false });
     } else {
-      await signIn("email", { callbackUrl: "/" });
+      await signIn("google");
     }
   };
 

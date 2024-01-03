@@ -11,12 +11,13 @@
     "@types/react": "18.2.25",
     "@types/react-dom": "18.2.11",
     "@vercel/postgres": "^0.5.1",
+    "@vercel/speed-insights": "^1.0.2",
     "drizzle-kit": "^0.19.13",
     "drizzle-orm": "^0.29.2",
     "next": "^14.0.4",
+    "next-auth": "^4.3.1",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "next-auth": "^4.24.5"
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.16",
