@@ -25,19 +25,24 @@ export async function GET(request: Request) {
         );
 
       if (votes.length === 0) {
-        const eventsForVoting = await db
+        const weekEvents = await db
           .select()
           .from(Events)
           .where(eq(Events.week, findweek));
 
         return NextResponse.json(
-          { userCanVote: true, eventsForVoting },
+          { userCanVote: true, weekEvents },
           { status: 200 }
         );
       } else {
-        const votedEvent = votes[0];
+        const votedEventId = votes[0].event_id as number;
+        const weekEvents = await db
+          .select()
+          .from(Events)
+          .where(eq(Events.event_id, votedEventId));
+
         return NextResponse.json(
-          { userCanVote: false, votedEvent },
+          { userCanVote: false, weekEvents },
           { status: 200 }
         );
       }

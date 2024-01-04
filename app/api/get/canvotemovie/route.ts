@@ -24,20 +24,25 @@ export async function GET(request: Request) {
           )
         );
 
-      if (votes.length === 0) {
-        const moviesForVoting = await db
+      if (votes.length == 0) {
+        const movies = await db
           .select()
           .from(Movies)
           .where(eq(Movies.week, findweek));
 
         return NextResponse.json(
-          { userCanVote: true, moviesForVoting },
+          { userCanVote: true, movies },
           { status: 200 }
         );
       } else {
-        const votedMovie = votes[0];
+        const votedMovieId = votes[0].movie_id as number;
+        const movies = await db
+          .select()
+          .from(Movies)
+          .where(eq(Movies.movie_id, votedMovieId));
+
         return NextResponse.json(
-          { userCanVote: false, votedMovie },
+          { userCanVote: false, movies },
           { status: 200 }
         );
       }
