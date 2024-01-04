@@ -50,7 +50,7 @@ const WeekView: React.FC = () => {
               className={styles.movie}
               style={{
                 backgroundImage: `url(${movie.url})`,
-                backgroundSize: "contain",
+                backgroundSize: "cover",
                 backgroundRepeat: "no-repeat",
               }}
             ></Box>

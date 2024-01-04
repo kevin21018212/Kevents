@@ -72,44 +72,46 @@ const Vote = ({ week, session }: VoteProps) => {
 
   return (
     <div className={styles.container}>
-      <Typography variant="h4">Vote</Typography>
-      <Box className={styles.eventBox}>
-        {/* Display event information */}
+      <Box className={styles.eventContainer}>
         {EventInfo.weekEvents.map((event) => (
-          <Box key={event.event_id}>
+          <Container className={styles.event} key={event.event_id}>
             <Typography variant="body1">
               Event Name: {event.event_name || "No Name"}
             </Typography>
             <Typography variant="body1">
               Description: {event.description || "No Description"}
             </Typography>
-          </Box>
+          </Container>
         ))}
       </Box>
-      <Box className={styles.content}>
+      <Box className={styles.movieContainer}>
         <Box>
           {!MovieInfo.userCanVote ? (
-            <Box className={styles.movieBox}>
-              <Box
-                className={styles.movie}
-                style={{
-                  // Check if MovieInfo.votedMovie is defined before accessing its properties
-                  backgroundImage: `url(${MovieInfo.movies[0]?.url})`,
-
-                  backgroundSize: "contain",
-                  backgroundRepeat: "no-repeat",
-                }}
-              ></Box>
-            </Box>
+            <Box
+              className={styles.movie}
+              style={{
+                backgroundImage: `url(${MovieInfo.movies[0]?.url})`,
+                backgroundSize: "cover",
+                backgroundRepeat: "no-repeat",
+              }}
+            ></Box>
           ) : (
             <Box className={styles.movieBox}>
-              {MovieInfo.movies.map((movie: any) => (
-                <Box key={movie.movie_id}>
-                  <Typography variant="body1">{movie.movie_title}</Typography>
+              {MovieInfo.movies.map((movie: any, index: number) => (
+                <Box
+                  className={styles.movieVote}
+                  key={movie.movie_id}
+                  style={{
+                    backgroundImage: `url(${MovieInfo.movies[index]?.url})`,
+                    backgroundSize: "cover",
+                    backgroundRepeat: "no-repeat",
+                  }}
+                >
                   <Button
-                    variant="contained"
                     color="primary"
+                    size="small"
                     onClick={() => handleVote(movie.movie_id)}
+                    sx={{ margin: " 2.5% 20%" }}
                   >
                     Vote
                   </Button>
