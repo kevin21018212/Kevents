@@ -3,8 +3,7 @@ import React, { useState, useEffect } from "react";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
+
 import styles from "./vote.module.css";
 import { Movie, Event } from "@/app/db";
 
@@ -12,30 +11,39 @@ interface VoteProps {
   week: number;
   session: any;
 }
-interface WeekData {
-  events: Event[];
-  movies: Movie[];
+interface VotingMovie {
+  userCanVote: boolean;
+  voteData: any;
+}
+interface VotingEvent {
+  userCanVote: boolean;
+  voteData: any;
 }
 
 const Vote = ({ week, session }: VoteProps) => {
-  const [weekData, setWeekData] = useState<WeekData>({
-    events: [],
-    movies: [],
+  const [MovieInfo, setMovieInfo] = useState<VotingMovie>({
+    userCanVote: false,
+    voteData: null,
   });
-
-  const [userCanVote, setUserCanVote] = useState<boolean | null>(null);
+  const [EventInfo, setEventInfo] = useState<VotingEvent>({
+    userCanVote: false,
+    voteData: null,
+  });
 
   useEffect(() => {
     async function getData() {
       const useremail = session?.user?.email as string;
-      const responseWeek = await fetch(`/api/get/eventvote?week=${week}`);
-      const dataWeek = await responseWeek.json();
-      setWeekData(dataWeek);
-      const responseCanVote = await fetch(
-        `/api/get/canvote?week=${week}&email=${useremail}`
+
+      const responseCanVoteMovie = await fetch(
+        `/api/get/canvoteevent?week=${week}&email=${useremail}`
       );
-      const dataCanVote = await responseCanVote.json();
-      setUserCanVote(dataCanVote.userCanVote);
+      const canVoteMovie = await responseCanVoteMovie.json();
+      setMovieInfo(canVoteMovie);
+
+      const responseCanVoteEvent = await fetch(
+        `/api/get/canvotemovie?week=${week}&email=${useremail}`
+      );
+      const canVoteEvent = await responseCanVoteEvent.json();
     }
     getData();
   }, [week, session]);
@@ -46,7 +54,6 @@ const Vote = ({ week, session }: VoteProps) => {
       `/api/add/votemovie?week=${week}&email=${useremail}&movie_id=${movieId}`
     );
 
-    setUserCanVote(false);
     console.log(`Voted successfully for movie with ID ${movieId}`);
   };
 
@@ -59,45 +66,35 @@ const Vote = ({ week, session }: VoteProps) => {
     <div className={styles.container}>
       <Typography variant="h4">Vote</Typography>
       <Box className={styles.content}>
-        <Box className={styles.eventBox}>
-          {/* Display event information */}
-          {weekData.events.map((event) => (
-            <Box key={event.event_id}>
+        <Box>
+          {MovieInfo.userCanVote ? (
+            <Box>
               <Typography variant="body1">
-                Event Name: {event.event_name || "No Name"}
+                User cannot vote for Movies
               </Typography>
-              <Typography variant="body1">
-                Description: {event.description || "No Description"}
-              </Typography>
-              {/* Preferred Time Input */}
-              <TextField
-                variant="outlined"
-                fullWidth
-                placeholder="Preferred Time"
-                onChange={(e) =>
-                  handlePreferredTime(event.event_id, e.target.value)
-                }
-              />
+              {/* Add your box content here for true condition */}
             </Box>
-          ))}
+          ) : (
+            <Box>
+              <Typography variant="body1">User can vote for Movies</Typography>
+              {/* Add your box content here for true condition */}
+            </Box>
+          )}
         </Box>
-        <Box className={styles.movieBox}>
-          {/* Display movie information with Vote Button (conditionally) */}
-          {weekData.movies.map((movie) => (
-            <Box key={movie.movie_id}>
-              <Typography variant="body1">{movie.movie_title}</Typography>
-              {/* Conditionally render the Vote Button based on user voting eligibility */}
-              {userCanVote !== null && userCanVote && (
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={() => handleVote(movie.movie_id)}
-                >
-                  Vote
-                </Button>
-              )}
+        <Box>
+          {EventInfo.userCanVote ? (
+            <Box>
+              <Typography variant="body1">
+                User cannot vote for Events
+              </Typography>
+              {/* Add your box content here for true condition */}
             </Box>
-          ))}
+          ) : (
+            <Box>
+              <Typography variant="body1">User can vote for Events</Typography>
+              {/* Add your box content here for true condition */}
+            </Box>
+          )}
         </Box>
       </Box>
     </div>
