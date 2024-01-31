@@ -73,7 +73,7 @@ const Vote = ({ week, session }: VoteProps) => {
   return (
     <div className={styles.container}>
       <Box className={styles.eventContainer}>
-        {EventInfo.weekEvents.map((event) => (
+        {EventInfo.weekEvents?.map((event) => (
           <Container className={styles.event} key={event.event_id}>
             <Typography variant="body1">
               Event Name: {event.event_name || "No Name"}
@@ -97,7 +97,7 @@ const Vote = ({ week, session }: VoteProps) => {
             ></Box>
           ) : (
             <Box className={styles.movieBox}>
-              {MovieInfo.movies.map((movie: any, index: number) => (
+              {MovieInfo.movies?.map((movie: any, index: number) => (
                 <Box
                   className={styles.movieVote}
                   key={movie.movie_id}

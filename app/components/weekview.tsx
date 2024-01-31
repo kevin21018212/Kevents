@@ -32,7 +32,7 @@ const WeekView: React.FC = () => {
       <Box className={styles.content}>
         <Box className={styles.eventBox}>
           {/* Display event information */}
-          {weekData.events.map((event) => (
+          {weekData.events?.map((event) => (
             <Box key={event.event_id}>
               <Typography variant="body1">
                 Event Name: {event.event_name || "No Name"}
@@ -44,7 +44,7 @@ const WeekView: React.FC = () => {
           ))}
         </Box>
         <Box className={styles.movieBox}>
-          {weekData.movies.map((movie) => (
+          {weekData.movies?.map((movie) => (
             <Box
               key={movie.movie_id}
               className={styles.movie}
